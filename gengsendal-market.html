@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GengSendal — Belanja Apa Aja, Semua Ada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Georgia&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --merah:#7A1F1F;
+    --merah-terang:#9A2C2C;
+    --ungu:#4B2360;
+    --ungu-terang:#63307F;
+    --emas:#C98A2C;
+    --krem:#FFF9F2;
+    --blush:#FBEDE9;
+    --ink:#2B1E22;
+    --gray:#7A6C70;
+    --line:#EFE2DC;
+    --radius-lg:18px;
+    --radius-md:12px;
+    --radius-sm:8px;
+    --shadow:0 16px 34px -20px rgba(122,31,31,0.35);
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Poppins',sans-serif;
+    color:var(--ink);
+    background:var(--krem);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  button{font-family:inherit;}
+  .container{width:100%;max-width:1200px;margin:0 auto;padding:0 28px;}
+  section{padding:70px 0;}
+
+  /* topbar */
+  .topbar{
+    background:var(--merah);
+    color:#fff;
+    text-align:center;
+    font-size:0.82rem;
+    padding:9px 0;
+    letter-spacing:0.2px;
+  }
+
+  /* navbar */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(255,249,242,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;gap:26px;
+    padding:16px 0;
+  }
+  .logo{
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.55rem;
+    font-weight:900;
+    letter-spacing:0.4px;
+    white-space:nowrap;
+  }
+  .logo-geng{color:var(--merah);text-shadow:1.5px 1.5px 0 rgba(122,31,31,0.25);}
+  .logo-sendal{color:var(--ungu);text-shadow:1.5px 1.5px 0 rgba(75,35,96,0.25);}
+  .search-wrap{
+    flex:1;
+    display:flex;
+    align-items:center;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:10px 18px;
+    gap:10px;
+    max-width:520px;
+  }
+  .search-wrap input{
+    border:none;outline:none;flex:1;
+    font-family:inherit;font-size:0.92rem;
+    background:transparent;
+  }
+  .nav-actions{display:flex;align-items:center;gap:22px;}
+  .nav-actions a{font-size:0.92rem;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+  .cart-btn{position:relative;}
+  .cart-count{
+    position:absolute;top:-8px;right:-10px;
+    background:var(--merah);color:#fff;
+    font-size:0.68rem;font-weight:600;
+    width:18px;height:18px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .burger{display:none;background:none;border:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .burger span{width:22px;height:2px;background:var(--ink);border-radius:2px;transition:transform .25s var(--ease), opacity .25s var(--ease);}
+  .mobile-menu{
+    display:none;flex-direction:column;
+    padding:16px 28px 22px;
+    border-top:1px solid var(--line);
+    background:#fff;
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{
+    padding:12px 0;font-size:0.95rem;
+    border-bottom:1px solid var(--line);
+  }
+  .mobile-search{
+    display:flex;align-items:center;gap:10px;
+    background:var(--krem);border:1px solid var(--line);
+    border-radius:999px;padding:10px 16px;
+    margin-bottom:8px;
+  }
+  .mobile-search input{
+    border:none;outline:none;flex:1;
+    font-family:inherit;font-size:0.9rem;background:transparent;
+  }
+
+  /* hero */
+  .hero{padding:64px 0 40px;}
+  .hero .container{
+    display:grid;grid-template-columns:1.05fr 0.95fr;
+    gap:50px;align-items:center;
+  }
+  .hero-text span.tag{
+    display:inline-block;
+    background:var(--blush);
+    color:var(--merah);
+    font-size:0.82rem;font-weight:500;
+    padding:6px 16px;border-radius:999px;
+    margin-bottom:18px;
+  }
+  .hero-text h1{
+    font-family:Georgia,serif;
+    font-size:2.7rem;
+    line-height:1.18;
+    font-weight:700;
+    color:var(--ink);
+    margin-bottom:18px;
+  }
+  .hero-text h1 em{font-style:normal;color:var(--merah);}
+  .hero-text p{color:var(--gray);max-width:440px;margin-bottom:30px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 28px;border-radius:999px;
+    font-weight:500;font-size:0.95rem;cursor:pointer;border:1px solid transparent;
+    transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+  }
+  .btn-primary{background:var(--merah);color:#fff;}
+  .btn-primary:hover{background:var(--merah-terang);transform:translateY(-2px);box-shadow:var(--shadow);}
+  .btn-ghost{background:#fff;border-color:var(--line);color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--ungu);color:var(--ungu);transform:translateY(-2px);}
+  .hero-media{position:relative;}
+  .hero-media .frame{
+    border-radius:var(--radius-lg);
+    overflow:hidden;box-shadow:var(--shadow);
+    height:420px;
+  }
+  .hero-media .frame img{width:100%;height:100%;object-fit:cover;}
+  .hero-badge{
+    position:absolute;bottom:-18px;left:-18px;
+    background:#fff;border-radius:var(--radius-md);
+    padding:14px 20px;box-shadow:var(--shadow);
+    font-size:0.85rem;display:flex;gap:10px;align-items:center;
+  }
+  .hero-badge b{display:block;color:var(--merah);font-size:1.05rem;}
+
+  /* kategori */
+  .kategori-row{
+    display:flex;gap:12px;flex-wrap:wrap;
+    padding:8px 0 0;
+  }
+  .chip{
+    padding:10px 20px;border-radius:999px;
+    border:1px solid var(--line);background:#fff;
+    font-size:0.88rem;font-weight:500;
+    cursor:pointer;transition:all .2s var(--ease);
+    display:flex;align-items:center;gap:8px;
+  }
+  .chip.active, .chip:hover{
+    background:var(--merah);color:#fff;border-color:var(--merah);
+  }
+
+  /* section head */
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    margin-bottom:32px;flex-wrap:wrap;gap:14px;
+  }
+  .section-head h2{
+    font-family:Georgia,serif;font-size:1.7rem;color:var(--ink);
+  }
+  .section-head p{color:var(--gray);font-size:0.9rem;}
+
+  /* produk grid */
+  .produk-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+  }
+  .produk-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius-md);
+    overflow:hidden;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+    position:relative;
+  }
+  .produk-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);}
+  .produk-img{height:200px;overflow:hidden;position:relative;}
+  .produk-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease);}
+  .produk-card:hover .produk-img img{transform:scale(1.07);}
+  .diskon-ribbon{
+    position:absolute;top:12px;left:-6px;
+    background:var(--emas);color:#fff;
+    font-size:0.72rem;font-weight:600;
+    padding:5px 14px 5px 18px;
+    border-radius:0 4px 4px 0;
+  }
+  .diskon-ribbon::after{
+    content:"";position:absolute;left:0;top:100%;
+    border-left:6px solid transparent;
+    border-top:6px solid #8f6116;
+  }
+  .produk-body{padding:16px 18px 20px;}
+  .produk-kategori{font-size:0.72rem;color:var(--gray);margin-bottom:4px;}
+  .produk-nama{font-size:0.96rem;font-weight:500;margin-bottom:8px;min-height:44px;}
+  .rating{display:flex;align-items:center;gap:5px;font-size:0.78rem;color:var(--gray);margin-bottom:10px;}
+  .rating .stars{color:var(--emas);letter-spacing:1px;}
+  .harga-row{display:flex;align-items:baseline;gap:8px;margin-bottom:14px;}
+  .harga-now{font-weight:700;color:var(--merah);font-size:1.05rem;}
+  .harga-old{font-size:0.8rem;color:var(--gray);text-decoration:line-through;}
+  .add-cart{
+    width:100%;padding:10px;border-radius:999px;
+    background:var(--ungu);color:#fff;border:none;
+    font-size:0.86rem;font-weight:500;cursor:pointer;
+    transition:background .25s var(--ease);
+  }
+  .add-cart:hover{background:var(--merah);}
+  .add-cart.added{background:var(--emas);}
+
+  /* trust */
+  .trust{background:var(--blush);}
+  .trust-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+  }
+  .trust-item{
+    text-align:center;padding:10px;
+  }
+  .trust-icon{
+    width:52px;height:52px;border-radius:50%;
+    background:#fff;display:flex;align-items:center;justify-content:center;
+    margin:0 auto 14px;color:var(--merah);
+    box-shadow:0 10px 22px -14px rgba(122,31,31,0.35);
+  }
+  .trust-item h4{font-size:0.95rem;margin-bottom:6px;}
+  .trust-item p{font-size:0.8rem;color:var(--gray);}
+
+  /* cta bawah */
+  .cta-band{
+    background:linear-gradient(120deg,var(--merah),var(--ungu));
+    color:#fff;border-radius:var(--radius-lg);
+    padding:52px 46px;
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:20px;
+  }
+  .cta-band h3{font-family:Georgia,serif;font-size:1.5rem;margin-bottom:6px;}
+  .cta-band p{color:rgba(255,255,255,0.82);font-size:0.9rem;}
+  .cta-band .btn-primary{background:#fff;color:var(--merah);}
+  .cta-band .btn-primary:hover{background:var(--krem);}
+
+  /* footer */
+  footer{background:#241417;color:rgba(255,255,255,0.75);padding:56px 0 24px;}
+  .footer-grid{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;
+    margin-bottom:36px;
+  }
+  .footer-grid h5{color:#fff;font-size:0.95rem;margin-bottom:16px;}
+  .footer-grid li{margin-bottom:10px;font-size:0.86rem;}
+  .footer-grid p{font-size:0.86rem;max-width:280px;margin-top:10px;}
+  .footer-bottom{
+    border-top:1px solid rgba(255,255,255,0.1);
+    padding-top:20px;text-align:center;font-size:0.8rem;
+  }
+
+  @media(max-width:900px){
+    .hero .container{grid-template-columns:1fr;}
+    .hero-media{order:-1;}
+    .hero-media .frame{height:300px;}
+    .produk-grid{grid-template-columns:repeat(2,1fr);}
+    .trust-grid{grid-template-columns:repeat(2,1fr);}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .search-wrap{display:none;}
+    .nav-actions .nav-link{display:none;}
+    .burger{display:flex;}
+  }
+  @media(max-width:560px){
+    .container{padding:0 20px;}
+    .hero-text h1{font-size:2.1rem;}
+    .hero-badge{left:8px;bottom:-14px;padding:10px 14px;font-size:0.78rem;}
+    .produk-grid{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr;gap:26px;}
+    .cta-band{flex-direction:column;text-align:center;padding:36px 26px;}
+    section{padding:48px 0;}
+  }
+  @media(max-width:400px){
+    .produk-grid{grid-template-columns:1fr;}
+    .trust-grid{grid-template-columns:1fr;}
+    .hero-text h1{font-size:1.8rem;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">Gratis Ongkir se-Ciputat • Belanja Aman &amp; Nyaman di GengSendal</div>
+
+<header>
+  <div class="container">
+    <nav>
+      <a href="#" class="logo"><span class="logo-geng">Geng</span><span class="logo-sendal">Sendal</span></a>
+      <div class="search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7A6C70" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Cari produk, brand, atau kategori...">
+      </div>
+      <div class="nav-actions">
+        <a href="#kategori" class="nav-link"><span class="txt">Kategori</span></a>
+        <a href="#produk" class="nav-link"><span class="txt">Produk</span></a>
+        <a href="#" class="nav-link"><span class="txt">Masuk</span></a>
+        <a href="#" class="cart-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.8"><circle cx="9" cy="21" r="1.3"/><circle cx="18" cy="21" r="1.3"/><path d="M2 3h2l2.4 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21 7H6"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+      </div>
+      <button class="burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7A6C70" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Cari produk, brand, atau kategori...">
+      </div>
+      <a href="#kategori">Kategori</a>
+      <a href="#produk">Produk</a>
+      <a href="#">Masuk</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-text">
+      <span class="tag">Marketplace Serba Ada</span>
+      <h1>Yang <em>Ada</em> Ajelahhh</h1>
+      <p>Dari fashion, elektronik, sampai kebutuhan rumah tangga — satu tempat buat belanja apapun yang kamu cari, dengan harga bersahabat.</p>
+      <div class="hero-actions">
+        <a href="#produk" class="btn btn-primary">Mulai Belanja</a>
+        <a href="#kategori" class="btn btn-ghost">Lihat Kategori</a>
+      </div>
+    </div>
+    <div class="hero-media">
+      <div class="frame">
+        <img src="https://picsum.photos/seed/gengsendal-hero/900/900" alt="Produk pilihan GengSendal">
+      </div>
+      <div class="hero-badge">
+        <b>1000+</b>
+        <span>Produk siap kirim<br>hari ini</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kategori" style="padding-top:20px;">
+  <div class="container">
+    <div class="kategori-row">
+      <div class="chip active">🛍️ Semua</div>
+      <div class="chip">👕 Fashion</div>
+      <div class="chip">📱 Elektronik</div>
+      <div class="chip">🩴 Sepatu &amp; Sendal</div>
+      <div class="chip">🏠 Rumah Tangga</div>
+      <div class="chip">💄 Kecantikan</div>
+      <div class="chip">⚽ Olahraga</div>
+      <div class="chip">🧸 Mainan</div>
+      <div class="chip">🎒 Aksesoris</div>
+    </div>
+  </div>
+</section>
+
+<section id="produk">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Produk Pilihan Minggu Ini</h2>
+        <p>Dikurasi khusus, stok terbatas.</p>
+      </div>
+    </div>
+    <div class="produk-grid" id="produkGrid">
+
+      <div class="produk-card">
+        <div class="produk-img">
+          <img src="data:image/jpeg;base64,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" alt="Tea Just">
+        </div>
+        <div class="produk-body">
+          <div class="produk-kategori">Minuman</div>
+          <div class="produk-nama">Tea Just</div>
+          <div class="rating"><span class="stars">★★★★★</span> 5.0 (1)</div>
+          <div class="harga-row"><span class="harga-now">Rp 2.000</span></div>
+          <button class="add-cart">+ Keranjang</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h2l2.4 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21 7H6"/></svg></div>
+        <h4>Gratis Ongkir</h4>
+        <p>Khusus wilayah se-Ciputat</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/></svg></div>
+        <h4>Garansi Uang Kembali</h4>
+        <p>Barang tidak sesuai, bisa retur</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg></div>
+        <h4>Pembayaran Aman</h4>
+        <p>Transfer, e-wallet, hingga COD</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0 8.3 6.7 15 15 15l3-4-6-3-2 2c-2.5-1.2-4.8-3.5-6-6l2-2-3-6-4 3Z"/></svg></div>
+        <h4>CS Responsif</h4>
+        <p>Siap bantu tiap hari lewat WhatsApp</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h3>Gabung Jadi Reseller GengSendal</h3>
+        <p>Dapatkan harga khusus dan komisi menarik.</p>
+      </div>
+      <a href="https://wa.me/6289665771098?text=Halo%20GengSendal%2C%20saya%20mau%20tanya%20soal%20jadi%20reseller" class="btn btn-primary" target="_blank">Chat via WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#" class="logo"><span class="logo-geng" style="text-shadow:none;">Geng</span><span class="logo-sendal" style="text-shadow:none;">Sendal</span></a>
+        <p>Marketplace tempat belanja apa aja, semua ada — mudah, cepat, dan terpercaya.</p>
+      </div>
+      <div>
+        <h5>Belanja</h5>
+        <ul>
+          <li><a href="#kategori">Kategori</a></li>
+          <li><a href="#produk">Produk Pilihan</a></li>
+          <li><a href="#">Promo</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Bantuan</h5>
+        <ul>
+          <li><a href="#">Cara Belanja</a></li>
+          <li><a href="#">Pengiriman</a></li>
+          <li><a href="#">Retur &amp; Refund</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Kontak</h5>
+        <ul>
+          <li>WhatsApp: 0896-6577-1098</li>
+          <li>Email: cs@gengsendal.id</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 GengSendal. Semua hak dilindungi.</div>
+  </div>
+</footer>
+
+<script>
+  // toggle menu mobile
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+  // simpan konten produk asli (kategori "Semua") sebelum difilter
+  const produkGrid = document.getElementById('produkGrid');
+  const semuaProdukHTML = produkGrid.innerHTML;
+  const kosongHTML = `
+    <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--gray);">
+      <p style="font-size:1.05rem;font-weight:500;">Belum ada produk</p>
+      <p style="font-size:0.88rem;margin-top:6px;">Kategori ini masih kosong, cek lagi nanti ya.</p>
+    </div>`;
+
+  function pasangTombolKeranjang(){
+    document.querySelectorAll('.add-cart').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        cartCount++;
+        cartCountEl.textContent = cartCount;
+        const original = btn.textContent;
+        btn.textContent = 'Ditambahkan ✓';
+        btn.classList.add('added');
+        setTimeout(()=>{ btn.textContent = original; btn.classList.remove('added'); }, 1200);
+      });
+    });
+  }
+
+  // kategori chip active state + filter tampilan
+  document.querySelectorAll('.chip').forEach(chip=>{
+    chip.addEventListener('click',()=>{
+      document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      const isSemua = chip.textContent.trim().includes('Semua');
+      produkGrid.innerHTML = isSemua ? semuaProdukHTML : kosongHTML;
+      if(isSemua) pasangTombolKeranjang();
+    });
+  });
+
+  // keranjang sederhana
+  let cartCount = 0;
+  const cartCountEl = document.getElementById('cartCount');
+  pasangTombolKeranjang();
+</script>
+
+</body>
+</html>
